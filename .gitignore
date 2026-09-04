@@ -44,9 +44,7 @@ app.*.map.json
 /android/app/profile
 /android/app/release
 
-lib/secrets.dart
-
-lib/screens/secrets.dart
+**/secrets.dart
 
 # Local machine / secrets — must never be committed
 local.properties
