@@ -1,46 +1,35 @@
-# MOIP-Z (모입지)
+# MOIP-Z (모입지) — Flutter
+> 초기 SvelteKit 프로토타입을 Flutter로 재구현한 버전입니다.
 
 > "오늘 뭐 입지?" — 옷장 관리부터 AI 코디 추천, 가상 피팅까지
 
-## 소개
-
-MOIP-Z는 사용자의 옷장을 디지털로 관리하고, AI가 상황에 맞는 코디를 추천하며,
-자신의 사진으로 가상 피팅까지 해볼 수 있는 안드로이드 앱입니다.
-
-기존 가상 피팅 서비스가 브랜드의 상품 이미지 제작에 초점이 맞춰져 있는 것과 달리,
-MOIP-Z는 사용자 본인의 사진과 실제 체형을 기준으로 한 개인용 피팅을 지향합니다.
+![Flutter](https://img.shields.io/badge/Flutter-3.47.2-02569B?logo=flutter&logoColor=white)
+![Dart](https://img.shields.io/badge/Dart-3.x-0175C2?logo=dart&logoColor=white)
+![Android](https://img.shields.io/badge/Android-SDK%2036+-3DDC84?logo=android&logoColor=white)
+![Gemini](https://img.shields.io/badge/Gemini-API-8E75B2?logo=googlegemini&logoColor=white)
 
 ## 앱 시연 영상
 
 https://www.youtube.com/shorts/bD1kWd607l0
 
-## 주요 기능
-
-| 기능 | 설명 |
-|---|---|
-| 옷장 관리 | 보유 의류를 촬영·등록하고 카테고리별로 관리 |
-| AI 코디 추천 | 날씨와 일정에 맞는 조합을 AI가 제안 |
-| 가상 피팅 | 사용자 사진에 의류를 합성해 착용 모습 확인 |
-| 가격 비교 | 네이버 쇼핑 API 연동으로 유사 상품 탐색 |
-
 ## 기술 스택
 
-- **Frontend** — Flutter (Dart)
-- **Backend** — Node.js
-- **AI 추천** — Gemini API
-- **가상 피팅** — fal.ai Kolors v1.5 / FASHN.ai (검토 중)
-- **외부 API** — 네이버 쇼핑 API, 기상청 API
+| 구분 | 사용 기술 |
+|---|---|
+| **Frontend** | Flutter (Dart) |
+| **Backend** | Node.js *(분리 예정)* |
+| **AI 추천** | Gemini API |
+| **가상 피팅** | fal.ai Kolors v1.5 / FASHN.ai *(검토 중)* |
+| **외부 API** | 네이버 쇼핑 API, 기상청 API |
 
-민감한 생체 정보는 온디바이스에서 처리하여 개인정보보호법상 노출을 최소화하는 구조로
-설계하였습니다.
+민감한 생체 정보는 온디바이스에서 처리하여 개인정보보호법상 노출을 최소화하는
+구조로 설계하였습니다.
 
-## 개발 환경 세팅
+## 개발 환경
 
-### 요구 사항
 - Flutter 3.47.2 (stable)
 - Android SDK 36 이상
 - 실제 안드로이드 기기 또는 에뮬레이터
-
 ### ⚠️ Windows 한글 경로 주의
 
 사용자 계정명에 한글이 포함된 경우(`C:\Users\홍길동`) Gradle 빌드가 실패합니다.
