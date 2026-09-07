@@ -138,13 +138,13 @@ API 키를 서버로 옮기는 백엔드 분리 작업이 로드맵에 있습니
 
 ```cmd
 git clone https://github.com/smj1746/MOIPZ-flutter.git
-cd MOIPZ-flutter
+cd MOIPZ-flutter\client
 flutter pub get
 ```
 
 ### API 키 설정
 
-**이 단계를 건너뛰면 컴파일되지 않습니다.** 키 파일 두 개를 만들어야 합니다.
+**이 단계를 건너뛰면 컴파일되지 않습니다.** 키 파일 두 개를 만들어야 합니다. (아래 경로는 모두 `client\` 기준입니다.)
 
 **1) `lib/secrets.dart`**
 
@@ -183,6 +183,7 @@ const String owmApiKey = 'OpenWeatherMap_API_키';
 ### 실행
 
 ```cmd
+cd client
 flutter devices
 flutter run
 ```
@@ -196,32 +197,47 @@ flutter run -d <device-id>
 ### 빌드
 
 ```cmd
+cd client
 flutter build apk --release
 ```
 
-산출물: `build\app\outputs\flutter-apk\app-release.apk`
+산출물: `client\build\app\outputs\flutter-apk\app-release.apk`
 
 ---
 
 ## 프로젝트 구조
 
+모노레포 구조로 client(Flutter)와 server(Node.js)를 분리했습니다.
+
 ```
-lib/
-├─ main.dart                        앱 진입점
-├─ secrets.dart                     Gemini 키 (gitignore)
-├─ secrets.example.dart             키 템플릿
-├─ screens/
-│  ├─ home_screen.dart              홈 · 날씨 · 상품 추천
-│  ├─ wardrobe_screen.dart          옷장 관리 · AI 자동 분류
-│  ├─ virtual_fitting_screen.dart   가상 피팅
-│  ├─ cody_screen.dart              AI 코디 추천
-│  ├─ fitting_history_screen.dart   피팅 기록
-│  ├─ profile_screen.dart           프로필 (기본/민감 정보 분리)
-│  ├─ gemini_test_screen.dart       API 연동 테스트
-│  ├─ secrets.dart                  네이버·날씨 키 (gitignore)
-│  └─ secrets.example.dart          키 템플릿
-└─ services/
-   └─ gemini_service.dart           Gemini 호출 · 프롬프트 관리
+MOIPZ-flutter/
+├─ client/                          Flutter 앱
+│  ├─ lib/
+│  │  ├─ main.dart                        앱 진입점
+│  │  ├─ secrets.dart                     Gemini 키 (gitignore)
+│  │  ├─ secrets.example.dart             키 템플릿
+│  │  ├─ screens/
+│  │  │  ├─ home_screen.dart              홈 · 날씨 · 상품 추천
+│  │  │  ├─ wardrobe_screen.dart          옷장 관리 · AI 자동 분류
+│  │  │  ├─ virtual_fitting_screen.dart   가상 피팅
+│  │  │  ├─ cody_screen.dart              AI 코디 추천
+│  │  │  ├─ fitting_history_screen.dart   피팅 기록
+│  │  │  ├─ profile_screen.dart           프로필 (기본/민감 정보 분리)
+│  │  │  ├─ gemini_test_screen.dart       API 연동 테스트
+│  │  │  ├─ secrets.dart                  네이버·날씨 키 (gitignore)
+│  │  │  └─ secrets.example.dart          키 템플릿
+│  │  └─ services/
+│  │     └─ gemini_service.dart           Gemini 호출 · 프롬프트 관리
+│  ├─ android/ ios/ test/ assets/
+│  └─ pubspec.yaml
+├─ server/                          Node.js 백엔드 (Express, 뼈대)
+│  ├─ src/
+│  │  ├─ index.js                  앱 진입점 · 헬스체크
+│  │  ├─ routes/
+│  │  └─ services/
+│  ├─ package.json
+│  └─ .env.example
+└─ docs/                            문서
 ```
 
 ---
