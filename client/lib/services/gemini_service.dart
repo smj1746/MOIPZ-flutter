@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:typed_data';
 import 'package:google_generative_ai/google_generative_ai.dart';
 
+import '../config/ai_models.dart';
 import '../secrets.dart';
 
 // ══════════════════════════════════════════════════════════════
@@ -23,9 +24,9 @@ class GeminiService {
   // 다른 화면에서 REST 직접 호출 시 같은 키를 재사용할 수 있게 공개 (예: 가상 피팅)
   static String get apiKey => _apiKey;
 
-  // Gemini 모델 — 앱 시작 후 처음 호출될 때 한 번만 생성됨
+    // Gemini 모델 — 앱 시작 후 처음 호출될 때 한 번만 생성됨
   final GenerativeModel _model =
-  GenerativeModel(model: 'gemini-2.5-flash', apiKey: _apiKey);
+  GenerativeModel(model: AiModels.vision, apiKey: _apiKey);
 
   // ── 1) 텍스트만 보내기 (인사 테스트용) ──────────
   Future<String> sendText(String prompt) async {

@@ -8,6 +8,7 @@ import 'package:path_provider/path_provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
 
+import '../config/ai_models.dart';
 import '../services/gemini_service.dart';
 
 // ══════════════════════════════════════════════════════════════
@@ -15,19 +16,10 @@ import '../services/gemini_service.dart';
 //  흐름:
 //   1) image_picker로 사용자 전신 사진 1장
 //   2) 옷장(shared_preferences 'wardrobe_clothes')의 옷을 가로 스크롤로 다중 선택
-//   3) '가상 피팅 시작' → gemini-2.5-flash-image REST 호출(inlineData base64)
+//   3) '가상 피팅 시작' → AiModels.imageModelCandidates REST 호출(inlineData base64)
 //      → 응답의 inlineData(이미지)를 디코드해 결과 표시
 //  게이팅: 사용자 사진 1장 + 옷 최소 1벌이면 활성화 (상·하의 조건 없음)
 // ══════════════════════════════════════════════════════════════
-
-// 이미지 생성 모델 후보 (앞에서부터 시도 → 429/404면 다음 후보로)
-//  ★ 'gemini-2.5-flash-image' = 정식(GA). 'gemini-2.5-flash-image-preview' = 프리뷰.
-//    (서버가 'gemini-2.5-flash-preview-image' 처럼 preview 별칭으로 해석해 quota 0이 나는
-//     경우를 피하려고, 정식 ID를 1순위로 두고 후보를 순차 시도)
-const List<String> _imageModelCandidates = [
-  'gemini-2.5-flash-image',          // 1순위: 정식(GA)
-  'gemini-2.5-flash-image-preview',  // 2순위: 프리뷰 (무료 티어가 이쪽만 열린 경우 대비)
-];
 
 // 모델 ID → generateContent REST 엔드포인트
 String _endpointFor(String model) =>
@@ -152,7 +144,7 @@ class _VirtualFittingScreenState extends State<VirtualFittingScreen> {
   }
 
   // ════════════════════════════════════════════════════════════
-  // AI 합성 — gemini-2.5-flash-image REST 직접 호출
+    // AI 합성 — AiModels.imageModelCandidates 순서대로 REST 직접 호출
   // ════════════════════════════════════════════════════════════
   Future<void> _startFitting() async {
     if (!_canFit) return;
@@ -218,7 +210,7 @@ class _VirtualFittingScreenState extends State<VirtualFittingScreen> {
       Uint8List? image;
       String? lastError;
 
-      for (final model in _imageModelCandidates) {
+      for (final model in AiModels.imageModelCandidates) {
         final endpoint = _endpointFor(model);
         final url = Uri.parse('$endpoint?key=${GeminiService.apiKey}');
 

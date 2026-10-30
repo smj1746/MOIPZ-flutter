@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:google_generative_ai/google_generative_ai.dart';
 import 'package:image_picker/image_picker.dart';
 
+import '../config/ai_models.dart';
 import '../secrets.dart';
 
 class GeminiTestScreen extends StatefulWidget {
@@ -26,7 +27,7 @@ class _GeminiTestScreenState extends State<GeminiTestScreen> {
   void initState() {
     super.initState();
     _model = GenerativeModel(
-      model: 'gemini-2.5-flash',
+      model: AiModels.vision,
       apiKey: _apiKey,
     );
   }
